@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.7.0",
     "firebase": "^11.0.2",
     "nuxt": "^3.14.1592",
     "vue": "latest",
@@ -17,5 +18,8 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

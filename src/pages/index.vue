@@ -1,6 +1,15 @@
 <script setup lang="ts">
-import HabitForm from '~/components/HabitForm.vue';
-import HabitList from '~/components/HabitList.vue';
+import HabitForm from '~/components/HabitForm.vue'
+import HabitList from '~/components/HabitList.vue'
+
+import { useHabitStore } from '~/stores/habits'
+
+const habitStore = useHabitStore()
+const { habits } = storeToRefs(habitStore)
+
+watchEffect(() => {
+  console.log('Habits:', habits.value.length)
+})
 </script>
 
 <template>
