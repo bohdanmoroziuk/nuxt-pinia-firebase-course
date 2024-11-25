@@ -1,0 +1,13 @@
+<template>
+  <div class="mx-auto p-6 max-w-2xl">
+    <h1 class="text-4xl font-bold text-center mb-8">
+      Habit Tracker
+    </h1>
+  </div>
+</template>
+
+<style lang="css">
+body {
+  background-color: #f1f1f1;
+}
+</style>
