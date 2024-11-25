@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HabitForm from '~/components/HabitForm.vue';
+import HabitList from '~/components/HabitList.vue';
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import HabitForm from '~/components/HabitForm.vue';
       Habit Tracker
     </h1>
     <HabitForm />
+    <HabitList />
   </div>
 </template>
 
