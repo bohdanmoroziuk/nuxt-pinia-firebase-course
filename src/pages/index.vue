@@ -6,10 +6,9 @@ import { useHabitStore } from '~/stores/habits'
 
 const habitStore = useHabitStore()
 const { habits } = storeToRefs(habitStore)
+const { fetchHabits } = habitStore
 
-watchEffect(() => {
-  console.log('Habits:', habits.value.length)
-})
+fetchHabits()
 </script>
 
 <template>
