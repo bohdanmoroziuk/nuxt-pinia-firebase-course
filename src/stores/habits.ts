@@ -1,4 +1,4 @@
-import { getDocs, addDoc, collection } from 'firebase/firestore'
+import { getDocs, addDoc, deleteDoc, doc, collection } from 'firebase/firestore'
 
 export type Habit = {
   id: string;
@@ -33,9 +33,18 @@ export const useHabitStore = defineStore('habits', () => {
     habits.value.push({ id: docRef.id, ...habit })
   }
 
+  async function deleteHabit(id: string) {
+    const docRef = doc($firestore, 'habits', id)
+
+    await deleteDoc(docRef)
+
+    habits.value = habits.value.filter((habit) => habit.id !== id)
+  }
+
   return {
     habits,
     fetchHabits,
     addHabit,
+    deleteHabit,
   }
 })

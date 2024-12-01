@@ -3,7 +3,17 @@ type Props = {
   habits: Habit[];
 }
 
-defineProps<Props>()
+type Emits = {
+  'delete-habit': [id: string];
+}
+
+const props = defineProps<Props>()
+
+const emit = defineEmits<Emits>()
+
+const deleteHabit = (id: string) => {
+  emit('delete-habit', id)
+}
 </script>
 
 <template>
@@ -18,7 +28,10 @@ defineProps<Props>()
           <p class="text-purple-500 font-bold">
             {{ habit.name }}
           </p>
-          <button class="text-gray-800">
+          <button
+            class="text-gray-800"
+            @click="deleteHabit(habit.id)"
+            >
             Delete
           </button>
         </div>

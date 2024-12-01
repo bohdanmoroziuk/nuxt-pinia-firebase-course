@@ -6,7 +6,7 @@ import { useHabitStore } from '~/stores/habits'
 
 const habitStore = useHabitStore()
 const { habits } = storeToRefs(habitStore)
-const { fetchHabits } = habitStore
+const { fetchHabits, deleteHabit } = habitStore
 
 fetchHabits()
 </script>
@@ -17,7 +17,7 @@ fetchHabits()
       Habit Tracker
     </h1>
     <HabitForm />
-    <HabitList :habits="habits" />
+    <HabitList :habits="habits" @delete-habit="deleteHabit" />
   </div>
 </template>
 
