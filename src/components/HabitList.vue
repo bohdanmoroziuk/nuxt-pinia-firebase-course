@@ -1,10 +1,22 @@
+<script setup lang="ts">
+type Props = {
+  habits: Habit[];
+}
+
+defineProps<Props>()
+</script>
+
 <template>
   <div>
     <ul class="space-y-4">
-      <li class="bg-white px-3 py-2 rounded-sm">
+      <li
+        v-for="habit of habits"
+        :key="habit.id"
+        class="bg-white px-3 py-2 rounded-sm"
+      >
         <div class="flex items-center justify-between mb-4">
           <p class="text-purple-500 font-bold">
-            Habit name
+            {{ habit.name }}
           </p>
           <button class="text-gray-800">
             Delete
@@ -22,7 +34,7 @@
         </div>
 
         <p class="text-sm text-gray-500 mt-2">
-          Current streak: 0 days.
+          Current streak: {{ habit.streak }} days.
         </p>
       </li>
     </ul>

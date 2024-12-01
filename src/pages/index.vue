@@ -17,7 +17,7 @@ fetchHabits()
       Habit Tracker
     </h1>
     <HabitForm />
-    <HabitList />
+    <HabitList :habits="habits" />
   </div>
 </template>
 
