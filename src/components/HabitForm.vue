@@ -3,9 +3,11 @@ import { ref } from 'vue'
 
 const name = ref('')
 
-const handleSubmit = () => {
+const { addHabit } = useHabitStore()
+
+const handleSubmit = async () => {
   if (name.value) {
-    console.log(name.value)
+    await addHabit(name.value)
     name.value = ''
   }
 }
