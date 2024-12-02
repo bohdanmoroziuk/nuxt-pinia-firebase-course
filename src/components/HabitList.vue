@@ -6,7 +6,7 @@ type Props = {
 }
 
 type Emits = {
-  'delete-habit': [id: string];
+  'delete': [id: string];
   'toggle-completion': [id: string];
 }
 
@@ -14,15 +14,15 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<Emits>()
 
-const deleteHabit = (id: string) => {
-  emit('delete-habit', id)
+const handleDelete = (id: string) => {
+  emit('delete', id)
 }
 
-const toggleCompletion = (id: string) => {
+const handleCompletionToggle = (id: string) => {
   emit('toggle-completion', id)
 }
 
-const isChecked = (completions: string[]) => {
+const checkIsChecked = (completions: string[]) => {
   return completions.includes(format(new Date(), 'yyyy-MM-dd'))
 }
 </script>
@@ -38,13 +38,13 @@ const isChecked = (completions: string[]) => {
         <div class="flex items-center justify-between mb-4">
           <p
             class="text-purple-500 font-bold"
-            :class="{ 'line-through': isChecked(habit.completions) }"
+            :class="{ 'line-through': checkIsChecked(habit.completions) }"
           >
             {{ habit.name }}
           </p>
           <button
             class="text-gray-800"
-            @click="deleteHabit(habit.id)"
+            @click="handleDelete(habit.id)"
             >
             Delete
           </button>
@@ -54,8 +54,8 @@ const isChecked = (completions: string[]) => {
           <input
             class="mr-2 accept-purple-500"
             type="checkbox"
-            :checked="isChecked(habit.completions)"
-            @change="toggleCompletion(habit.id)"
+            :checked="checkIsChecked(habit.completions)"
+            @change="handleCompletionToggle(habit.id)"
           />
           <p class="text-sm text-gray-500">
             I did this today

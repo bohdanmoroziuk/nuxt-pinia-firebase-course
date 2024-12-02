@@ -1,4 +1,3 @@
-import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from 'firebase/firestore'
 import { format, differenceInDays } from 'date-fns'
 
 export type Habit = {
@@ -9,35 +8,28 @@ export type Habit = {
 }
 
 export const useHabitStore = defineStore('habits', () => {
-  const { $firestore } = useNuxtApp()
+  const { getDocuments, addDocument, updateDocument, deleteDocument } = useFirestore<Habit>('habits')
 
   const habits = ref<Habit[]>([])
 
   async function fetchHabits() {
-    const snapshot = await getDocs(collection($firestore, 'habits'))
-
-    habits.value = snapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    } as Habit))
+    habits.value = await getDocuments()
   }
 
   async function addHabit(name: string) {
-    const habit = {
+    const data = {
       name,
       completions: [],
       streak: 0,
     }
 
-    const docRef = await addDoc(collection($firestore, 'habits'), habit)
+    const habit = await addDocument(data)
 
-    habits.value.push({ id: docRef.id, ...habit })
+    habits.value.push(habit)
   }
 
   async function updateHabit(id: string, updates: Partial<Habit>) {
-    const docRef = doc($firestore, 'habits', id)
-
-    await updateDoc(docRef, updates)
+    await updateDocument(id, updates)
 
     habits.value = habits.value.map((habit) => {
       return habit.id === id
@@ -47,14 +39,12 @@ export const useHabitStore = defineStore('habits', () => {
   }
 
   async function deleteHabit(id: string) {
-    const docRef = doc($firestore, 'habits', id)
-
-    await deleteDoc(docRef)
+    await deleteDocument(id)
 
     habits.value = habits.value.filter((habit) => habit.id !== id)
   }
 
-  async function toggleCompletion(id: string) {
+  async function toggleHabitCompletion(id: string) {
     const habit = habits.value.find((habit) => habit.id === id)
 
     if (habit === undefined) return
@@ -65,12 +55,12 @@ export const useHabitStore = defineStore('habits', () => {
       ? habit.completions.filter((date) => date !== today)
       : habit.completions.concat(today)
 
-    const streak = calculateStreak(completions)
+    const streak = calculateHabitStreak(completions)
 
     await updateHabit(id, { completions, streak })
   }
 
-  function calculateStreak(completions: string[]) {
+  function calculateHabitStreak(completions: string[]) {
     const dateStrings = completions
       .slice()
       .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
@@ -99,6 +89,6 @@ export const useHabitStore = defineStore('habits', () => {
     addHabit,
     updateHabit,
     deleteHabit,
-    toggleCompletion,
+    toggleHabitCompletion,
   }
 })
