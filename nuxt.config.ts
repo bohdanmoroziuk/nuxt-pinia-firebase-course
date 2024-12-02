@@ -9,6 +9,11 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
   ],
+  app: {
+    head: {
+      title: 'Habit Tracker',
+    },
+  },
   runtimeConfig: {
     public: {
       FIREBASE_API_KEY: process.env.NUXT_FIREBASE_API_KEY,
