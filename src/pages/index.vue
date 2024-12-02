@@ -2,11 +2,9 @@
 import HabitForm from '~/components/HabitForm.vue'
 import HabitList from '~/components/HabitList.vue'
 
-import { useHabitStore } from '~/stores/habits'
-
 const habitStore = useHabitStore()
 const { habits } = storeToRefs(habitStore)
-const { fetchHabits, deleteHabit, toggleCompletion } = habitStore
+const { fetchHabits, addHabit, deleteHabit, toggleHabitCompletion } = habitStore
 
 onMounted(fetchHabits)
 </script>
@@ -16,11 +14,11 @@ onMounted(fetchHabits)
     <h1 class="text-4xl font-bold text-center mb-8">
       Habit Tracker
     </h1>
-    <HabitForm />
+    <HabitForm @submit="addHabit" />
     <HabitList
       :habits="habits"
-      @delete-habit="deleteHabit"
-      @toggle-completion="toggleCompletion"
+      @delete="deleteHabit"
+      @toggle-completion="toggleHabitCompletion"
     />
   </div>
 </template>

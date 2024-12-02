@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+type Emits = {
+  'submit': [name: string]
+}
+
+const emit = defineEmits<Emits>()
+
 const name = ref('')
 
-const { addHabit } = useHabitStore()
-
-const handleSubmit = async () => {
+const handleSubmit = () => {
   if (name.value) {
-    await addHabit(name.value)
+    emit('submit', name.value)
     name.value = ''
   }
 }

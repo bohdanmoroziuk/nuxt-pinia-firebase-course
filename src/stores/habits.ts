@@ -54,7 +54,7 @@ export const useHabitStore = defineStore('habits', () => {
     habits.value = habits.value.filter((habit) => habit.id !== id)
   }
 
-  async function toggleCompletion(id: string) {
+  async function toggleHabitCompletion(id: string) {
     const habit = habits.value.find((habit) => habit.id === id)
 
     if (habit === undefined) return
@@ -65,12 +65,12 @@ export const useHabitStore = defineStore('habits', () => {
       ? habit.completions.filter((date) => date !== today)
       : habit.completions.concat(today)
 
-    const streak = calculateStreak(completions)
+    const streak = calculateHabitStreak(completions)
 
     await updateHabit(id, { completions, streak })
   }
 
-  function calculateStreak(completions: string[]) {
+  function calculateHabitStreak(completions: string[]) {
     const dateStrings = completions
       .slice()
       .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
@@ -99,6 +99,6 @@ export const useHabitStore = defineStore('habits', () => {
     addHabit,
     updateHabit,
     deleteHabit,
-    toggleCompletion,
+    toggleHabitCompletion,
   }
 })
