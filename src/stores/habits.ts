@@ -1,5 +1,5 @@
 import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from 'firebase/firestore'
-import { format } from 'date-fns'
+import { format, differenceInDays } from 'date-fns'
 
 export type Habit = {
   id: string;
@@ -65,7 +65,32 @@ export const useHabitStore = defineStore('habits', () => {
       ? habit.completions.filter((date) => date !== today)
       : habit.completions.concat(today)
 
-    await updateHabit(id, { completions })
+    const streak = calculateStreak(completions)
+
+    await updateHabit(id, { completions, streak })
+  }
+
+  function calculateStreak(completions: string[]) {
+    const dateStrings = completions
+      .slice()
+      .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+
+    let streak = 0
+    let currentDate = new Date()
+
+    for (const dateString of dateStrings) {
+      const date = new Date(dateString)
+      const difference = differenceInDays(currentDate, date)
+
+      if (difference > 1) {
+        break
+      }
+
+      streak += 1
+      currentDate = date
+    }
+
+    return streak
   }
 
   return {
