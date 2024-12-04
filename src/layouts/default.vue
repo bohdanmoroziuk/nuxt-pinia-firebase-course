@@ -6,6 +6,21 @@
           Habit Tracker
         </h1>
       </NuxtLink>
+
+      <div class="space-x-4">
+        <NuxtLink
+          class="hover:underline"
+          to="/login"
+        >
+          Log in
+        </NuxtLink>
+        <NuxtLink
+          class="hover:underline"
+          to="/signup"
+        >
+          Sign up
+        </NuxtLink>
+      </div>
     </header>
     <main>
       <slot />
