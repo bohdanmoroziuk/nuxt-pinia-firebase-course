@@ -1,9 +1,13 @@
 <script setup lang="ts">
+const authStore = useAuthStore()
+const { loginError } = storeToRefs(authStore)
+const { login } = authStore
+
 const email = ref('')
 const password = ref('')
 
-const handleLogin = () => {
-  console.log(email.value, password.value)
+const handleLogin = async () => {
+  await login(email.value, password.value)
 }
 </script>
 
@@ -38,9 +42,11 @@ const handleLogin = () => {
           Log in
         </button>
 
-        <p class="text-red mt-4 text-center">
-          <!-- Error feedback -->
-        </p>
+        <template v-if="loginError">
+          <p class="text-red mt-4 text-center">
+            {{ loginError }}
+          </p>
+        </template>
       </form>
     </div>
   </div>
