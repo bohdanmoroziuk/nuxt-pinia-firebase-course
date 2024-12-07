@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { logout } = useAuthStore()
+</script>
+
 <template>
   <div>
     <header class="bg-purple-500 text-white p-4 flex items-center justify-between">
@@ -7,19 +11,28 @@
         </h1>
       </NuxtLink>
 
-      <div class="space-x-4">
-        <NuxtLink
-          class="hover:underline"
-          to="/login"
+      <div class="flex items-center space-x-4">
+        <button
+          class="bg-gray-100 text-black px-3 py-1"
+          @click="logout"
         >
-          Log in
-        </NuxtLink>
-        <NuxtLink
-          class="hover:underline"
-          to="/signup"
-        >
-          Sign up
-        </NuxtLink>
+          Logout
+        </button>
+
+        <div class="space-x-4">
+          <NuxtLink
+            class="hover:underline"
+            to="/login"
+          >
+            Log in
+          </NuxtLink>
+          <NuxtLink
+            class="hover:underline"
+            to="/signup"
+          >
+            Sign up
+          </NuxtLink>
+        </div>
       </div>
     </header>
     <main>

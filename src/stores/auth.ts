@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, type User } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signOut, type User } from 'firebase/auth'
 
 export const useAuthStore = defineStore('auth', () => {
   const { auth } = useFirebase()
@@ -19,9 +19,16 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const logout = async () => {
+    await signOut(auth)
+
+    user.value = null
+  }
+
   return {
     user,
     signupError,
     signup,
+    logout,
   }
 })
