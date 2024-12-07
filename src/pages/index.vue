@@ -2,6 +2,10 @@
 import HabitForm from '~/components/HabitForm.vue'
 import HabitList from '~/components/HabitList.vue'
 
+definePageMeta({
+  middleware: ['auth'],
+})
+
 const habitStore = useHabitStore()
 const { habits } = storeToRefs(habitStore)
 const { fetchHabits, addHabit, deleteHabit, toggleHabitCompletion } = habitStore

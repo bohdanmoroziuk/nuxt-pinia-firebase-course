@@ -9,6 +9,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   const signupError = ref<string | null>(null)
 
+  const isLoggedIn = computed(() => !!user.value)
+
+  const isGuest = computed(() => !user.value)
+
   const trackAuthStateChange = () => {
     if (auth) {
       onAuthStateChanged(auth, (data) => {
@@ -47,6 +51,8 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     loginError,
     signupError,
+    isLoggedIn,
+    isGuest,
     trackAuthStateChange,
     signup,
     login,

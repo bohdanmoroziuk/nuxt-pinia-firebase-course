@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['guest'],
+})
+
 const authStore = useAuthStore()
 const { signupError } = storeToRefs(authStore)
 const { signup } = authStore
