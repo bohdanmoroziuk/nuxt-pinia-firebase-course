@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
 
 export const useAuthStore = defineStore('auth', () => {
   const { auth } = useFirebase()
@@ -9,13 +9,21 @@ export const useAuthStore = defineStore('auth', () => {
 
   const signupError = ref<string | null>(null)
 
+  const trackAuthStateChange = () => {
+    if (auth) {
+      onAuthStateChanged(auth, (data) => {
+        user.value = data
+      })
+    } else {
+      console.warn('Firebase auth is not initialized')
+    }
+  }
+
   const signup = async (email: string, password: string) => {
     try {
       signupError.value = null
 
-      const credential = await createUserWithEmailAndPassword(auth, email, password)
-
-      user.value = credential.user
+      await createUserWithEmailAndPassword(auth, email, password)
     } catch (error) {
       signupError.value = (error as Error).message
     }
@@ -25,9 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       loginError.value = null
 
-      const credential = await signInWithEmailAndPassword(auth, email, password)
-
-      user.value = credential.user
+      await signInWithEmailAndPassword(auth, email, password)
     } catch (error) {
       loginError.value = (error as Error).message
     }
@@ -35,14 +41,13 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logout = async () => {
     await signOut(auth)
-
-    user.value = null
   }
 
   return {
     user,
     loginError,
     signupError,
+    trackAuthStateChange,
     signup,
     login,
     logout,
