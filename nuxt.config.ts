@@ -9,6 +9,10 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
   ],
+  plugins: [
+    '~/plugins/firebase.client.ts',
+    '~/plugins/auth.client.ts',
+  ],
   app: {
     head: {
       title: 'Habit Tracker',
