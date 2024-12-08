@@ -1,10 +1,10 @@
-import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from 'firebase/firestore'
+import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection, query, where } from 'firebase/firestore'
 
 export const useFirestore = <T>(collectionName: string) => {
   const { firestore } = useFirebase()
 
-  async function getDocuments() {
-    const snapshot = await getDocs(collection(firestore, collectionName))
+  async function getDocuments(userId: string) {
+    const snapshot = await getDocs(query(collection(firestore, collectionName), where('userId', '==', userId)))
 
     return snapshot
       .docs
