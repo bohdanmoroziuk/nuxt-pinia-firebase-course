@@ -12,27 +12,31 @@ const { logout } = useAuthStore()
       </NuxtLink>
 
       <div class="flex items-center space-x-4">
-        <button
-          class="bg-gray-100 text-black px-3 py-1"
-          @click="logout"
-        >
-          Logout
-        </button>
+        <UserOnly>
+          <button
+            class="bg-gray-100 text-black px-3 py-1"
+            @click="logout"
+          >
+            Logout
+          </button>
+        </UserOnly>
 
-        <div class="space-x-4">
-          <NuxtLink
-            class="hover:underline"
-            to="/login"
-          >
-            Log in
-          </NuxtLink>
-          <NuxtLink
-            class="hover:underline"
-            to="/signup"
-          >
-            Sign up
-          </NuxtLink>
-        </div>
+        <GuestOnly>
+          <div class="space-x-4">
+            <NuxtLink
+              class="hover:underline"
+              to="/login"
+            >
+              Log in
+            </NuxtLink>
+            <NuxtLink
+              class="hover:underline"
+              to="/signup"
+            >
+              Sign up
+            </NuxtLink>
+          </div>
+        </GuestOnly>
       </div>
     </header>
     <main>
