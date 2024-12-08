@@ -3,15 +3,20 @@ definePageMeta({
   middleware: ['guest'],
 })
 
-const authStore = useAuthStore()
-const { loginError } = storeToRefs(authStore)
-const { login } = authStore
+const { login } = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+const error = ref('')
 
 const handleLogin = async () => {
-  await login(email.value, password.value)
+  try {
+    error.value = ''
+
+    await login(email.value, password.value)
+  } catch (e) {
+    error.value = (e as Error).message
+  }
 }
 </script>
 
@@ -46,9 +51,9 @@ const handleLogin = async () => {
           Log in
         </button>
 
-        <template v-if="loginError">
+        <template v-if="error">
           <p class="text-red mt-4 text-center">
-            {{ loginError }}
+            {{ error }}
           </p>
         </template>
       </form>
