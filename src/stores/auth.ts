@@ -1,7 +1,9 @@
 export const useAuthStore = defineStore('auth', () => {
-  const { trackState, signup, login, logout } = useAuth()
+  const { getUser, trackState, signup, login, logout } = useAuth()
 
-  const user = ref<User | null>(null)
+  const user = ref<User | null>(getUser())
+
+  const isReady = ref(false)
 
   const isLoggedIn = computed(() => !!user.value)
 
@@ -9,6 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   function setUser(value: User | null) {
     user.value = value
+    isReady.value = true
   }
 
   function trackAuthStateChange() {
@@ -17,6 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     user,
+    isReady,
     isLoggedIn,
     isGuest,
     trackAuthStateChange,

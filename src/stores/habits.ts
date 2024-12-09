@@ -15,11 +15,7 @@ export const useHabitStore = defineStore('habits', () => {
   const habits = ref<Habit[]>([])
 
   async function fetchHabits() {
-    try {
-      habits.value = await getDocuments(getUserId()!)
-    } catch (error) {
-      console.log(error)
-    }
+    habits.value = await getDocuments(getUserId()!)
   }
 
   async function addHabit(name: string) {

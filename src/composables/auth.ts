@@ -12,6 +12,10 @@ export type { User }
 export const useAuth = () => {
   const { auth } = useFirebase()
 
+  const getUser = () => {
+    return auth?.currentUser ?? null
+  }
+
   const getUserId = () => {
     return auth?.currentUser?.uid ?? null
   }
@@ -37,6 +41,7 @@ export const useAuth = () => {
   }
 
   return {
+    getUser,
     getUserId,
     trackState,
     signup,
