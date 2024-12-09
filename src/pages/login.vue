@@ -45,11 +45,18 @@ const handleLogin = async () => {
         />
 
         <button
-          class="w-full bg-purple-500 text-white py-2 rounded-sm"
+          class="w-full bg-purple-500 text-white py-2 mb-4 rounded-sm"
           type="submit"
         >
           Log in
         </button>
+
+        <div class="text-center">
+          <span>
+            Don't have an account?
+          </span>
+          <NuxtLink class="text-purple-500 hover:underline" to="/signup">Sign up</NuxtLink>
+        </div>
 
         <template v-if="error">
           <p class="text-red mt-4 text-center">

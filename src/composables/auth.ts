@@ -12,6 +12,10 @@ export type { User }
 export const useAuth = () => {
   const { auth } = useFirebase()
 
+  const getUserId = () => {
+    return auth?.currentUser?.uid ?? null
+  }
+
   const trackState = (handler: NextOrObserver<User>) => {
     if (auth) {
       onAuthStateChanged(auth, handler)
@@ -33,6 +37,7 @@ export const useAuth = () => {
   }
 
   return {
+    getUserId,
     trackState,
     signup,
     login,
