@@ -10,10 +10,8 @@ const emit = defineEmits<Emits>()
 const name = ref('')
 
 const handleSubmit = () => {
-  if (name.value) {
-    emit('submit', name.value)
-    name.value = ''
-  }
+  emit('submit', name.value)
+  name.value = ''
 }
 </script>
 
@@ -26,6 +24,7 @@ const handleSubmit = () => {
       class="w-full p-3 border border-gray-300 rounded-sm"
       type="text"
       placeholder="Enter a new habit..."
+      required
       v-model.trim="name"
     />
 

@@ -8,14 +8,14 @@ export type Habit = {
 }
 
 export const useHabitStore = defineStore('habits', () => {
-  const { auth } = useFirebase()
+  const { getUserId } = useAuth()
 
   const { getDocuments, addDocument, updateDocument, deleteDocument } = useFirestore<Habit>('habits')
 
   const habits = ref<Habit[]>([])
 
   async function fetchHabits() {
-    habits.value = await getDocuments(auth.currentUser!.uid)
+    habits.value = await getDocuments(getUserId()!)
   }
 
   async function addHabit(name: string) {
@@ -23,7 +23,7 @@ export const useHabitStore = defineStore('habits', () => {
       name,
       completions: [],
       streak: 0,
-      userId: auth.currentUser!.uid,
+      userId: getUserId()!,
     }
 
     const habit = await addDocument(data)
